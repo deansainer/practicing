@@ -27,6 +27,16 @@ class NewProductView(TemplateView):
         form = NewProductForm
         return render(request, self.template_name, {'form': form})
 
-
+    def post(self, request):
+        form = NewProductForm(request.POST)
+        if form.is_valid():
+            entered_title = form.cleaned_data['title']
+            entered_price = form.cleaned_data['price']
+            entered_slug = form.cleaned_data['slug']
+        args = {'form': form,
+                'entered_title': entered_title,
+                'entered_price': entered_price,
+                'entered_slug': entered_slug}
+        return render(request, self.template_name, args)
 
 
